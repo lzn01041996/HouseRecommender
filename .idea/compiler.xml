@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="es" />
+        <module name="DataLoader" />
+        <module name="Rent-spiderData" />
+        <module name="ContentRecommender" />
+        <module name="OfflineRecommender" />
+        <module name="foodie" />
+        <module name="KafkaStream" />
+        <module name="HouseRecommend" />
+        <module name="StatisticsRecommender" />
+        <module name="StreamingRecommender" />
+        <module name="houserec" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ContentRecommender" target="1.8" />
+      <module name="DataLoader" target="1.8" />
+      <module name="es" target="1.8" />
+      <module name="foodie" target="1.8" />
+      <module name="FrontPage" target="1.8" />
+      <module name="houserec" target="1.8" />
+      <module name="HouseRecommend" target="1.8" />
+      <module name="HouseRent" target="1.8" />
+      <module name="KafkaStream" target="1.8" />
+      <module name="OfflineRecommender" target="1.8" />
+      <module name="Rent-spiderData" target="1.8" />
+      <module name="StatisticsRecommender" target="1.8" />
+      <module name="StreamingRecommender" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="es" options="-parameters" />
+      <module name="foodie" options="-parameters" />
+      <module name="houserec" options="-parameters" />
+    </option>
+  </component>
+</project>

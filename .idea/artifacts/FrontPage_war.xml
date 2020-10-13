@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="FrontPage:war">
+    <output-path>$PROJECT_DIR$/FrontPage/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>FrontPage</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="BusinessServer.war">
+      <element id="artifact" artifact-name="FrontPage:war exploded" />
+    </root>
+  </artifact>
+</component>

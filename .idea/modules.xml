@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/HouseRecommend/ContentRecommender/ContentRecommender.iml" filepath="$PROJECT_DIR$/HouseRecommend/ContentRecommender/ContentRecommender.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HouseRecommend/DataLoader/DataLoader.iml" filepath="$PROJECT_DIR$/HouseRecommend/DataLoader/DataLoader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HouseRecommend/HouseRecommend.iml" filepath="$PROJECT_DIR$/HouseRecommend/HouseRecommend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/HouseRent.iml" filepath="$PROJECT_DIR$/.idea/HouseRent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HouseRecommend/KafkaStream/KafkaStream.iml" filepath="$PROJECT_DIR$/HouseRecommend/KafkaStream/KafkaStream.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HouseRecommend/OfflineRecommender/OfflineRecommender.iml" filepath="$PROJECT_DIR$/HouseRecommend/OfflineRecommender/OfflineRecommender.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Rent-spiderData/Rent-spiderData.iml" filepath="$PROJECT_DIR$/Rent-spiderData/Rent-spiderData.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HouseRecommend/StatisticsRecommender/StatisticsRecommender.iml" filepath="$PROJECT_DIR$/HouseRecommend/StatisticsRecommender/StatisticsRecommender.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HouseRecommend/StreamingRecommender/StreamingRecommender.iml" filepath="$PROJECT_DIR$/HouseRecommend/StreamingRecommender/StreamingRecommender.iml" />
+      <module fileurl="file://$PROJECT_DIR$/es/es.iml" filepath="$PROJECT_DIR$/es/es.iml" />
+      <module fileurl="file://$PROJECT_DIR$/foodie/foodie.iml" filepath="$PROJECT_DIR$/foodie/foodie.iml" />
+    </modules>
+  </component>
+</project>

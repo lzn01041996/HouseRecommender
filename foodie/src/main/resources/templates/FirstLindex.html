@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
+
+	<style type="text/css">
+		body {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";} 
+		/* html, #esmap, #allmap {width: 100%;height: 85%;overflow: hidden;margin:0;font-family:"微软雅黑";} */
+		#allmap {width: 100%;height: 700px;overflow: hidden;margin:0;font-family:"微软雅黑";}
+		.zhezhao{
+			position: fixed;
+			left: 0px;
+			top: 0px;
+			background: #000;
+			width: 100%;
+			height: 100%;
+			opacity: 0.8;
+		}
+		.tankuang{
+			position: relative;
+			background: #fff;
+			width: 50%;
+			height: 80%;
+			border-radius: 5px;
+			margin: 5% auto;
+		}
+		#header{
+			height: 40px;
+		}
+		#header-right{
+			position: absolute;
+			width: 25px;
+			height: 25px;
+			border-radius: 5px;
+			background: red;
+			color: #fff;
+			right: 5px;
+			top: 5px;
+			text-align: center;
+		}
+	</style>
+
+	<title>房源</title>
+</head>
+
+<body>
+	<div id="esmap">
+		<div class="tips" style="color: green;font-weight: bold;" >
+			<div id="r-result">
+				<input type="text" id="suggestId" size="20" style="width:150px;" placeholder="请输入小区名或地址"/></div>
+			<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+		</div>
+
+		<div class="right-container" style="float: right">
+			<a th:href="@{/user_login}" th:if="${session.loginuser==null}">请登录</a>
+			<a th:href="@{/user_update}" th:text="${session.loginuser}" th:if="${session.loginuser!=null}" class="loginname"></a>
+			<a th:href="@{/user_register}" th:if="${session.loginuser==null}">注册</a>
+			<a th:href="@{/user_logout}" th:if="${session.loginuser!=null}" class="logout">退出</a>
+		</div>
+		<div id="allmap"></div>
+		<div class="zhezhao" id='zhezhao'>
+			<div class="tankuang">
+				<div id="header">
+					<div id="header-right" @click="hidder">x</div>
+						您意向的房型？<br /><br />
+						<label><input name="Fruit" type="checkbox" value="13室2厅" />13室2厅 </label>
+						<label><input name="Fruit" type="checkbox" value="1室0厅" />1室0厅 </label>
+						<label><input name="Fruit" type="checkbox" value="1室1厅" />1室1厅 </label>
+						<label><input name="Fruit" type="checkbox" value="1室2厅" />1室2厅 </label>
+						<label><input name="Fruit" type="checkbox" value="2室0厅" />2室0厅 </label>
+						<label><input name="Fruit" type="checkbox" value="2室1厅" />2室1厅 </label>
+						<label><input name="Fruit" type="checkbox" value="2室2厅" />2室2厅 </label>
+						<label><input name="Fruit" type="checkbox" value="3室0厅" />3室0厅 </label>
+						<label><input name="Fruit" type="checkbox" value="3室1厅" />3室1厅 </label>
+						<label><input name="Fruit" type="checkbox" value="3室2厅" />3室2厅 </label>
+						<label><input name="Fruit" type="checkbox" value="4室3厅" />4室3厅 </label>
+						<label><input name="Fruit" type="checkbox" value="4室0厅" />4室0厅 </label>
+						<label><input name="Fruit" type="checkbox" value="4室1厅 " />4室1厅 </label>
+						<label><input name="Fruit" type="checkbox" value="4室2厅 " />4室2厅 </label>
+						<label><input name="Fruit" type="checkbox" value="4室3厅 " />4室3厅 </label>
+						<label><input name="Fruit" type="checkbox" value="4室4厅 " />4室4厅 </label>
+						<label><input name="Fruit" type="checkbox" value="5室1厅 " />5室1厅 </label>
+						<label><input name="Fruit" type="checkbox" value="5室2厅 " />5室2厅 </label>
+						<label><input name="Fruit" type="checkbox" value="5室3厅 " />5室3厅 </label>
+						<label><input name="Fruit" type="checkbox" value="5室0厅 " />5室0厅 </label>
+						<label><input name="Fruit" type="checkbox" value="6室4厅 " />6室4厅 </label>
+						<label><input name="Fruit" type="checkbox" value="6室0厅 " />6室0厅 </label>
+						<label><input name="Fruit" type="checkbox" value="6室1厅 " />6室1厅 </label>
+						<label><input name="Fruit" type="checkbox" value="6室2厅 " />6室2厅 </label>
+						<label><input name="Fruit" type="checkbox" value="6室3厅 " />6室3厅 </label>
+						<label><input name="Fruit" type="checkbox" value="7室1厅 " />7室1厅 </label>
+						<label><input name="Fruit" type="checkbox" value="9室1厅 " />9室1厅 </label>
+						<label><input name="Fruit" type="checkbox" value="8室2厅 " />8室2厅 </label>
+						<label><input name="Fruit" type="checkbox" value="8室3厅 " />8室3厅 </label>
+						<br>
+						<button @click="changePre">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.9/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+<script type="text/javascript" src="https://api.map.baidu.com/getscript?v=2.0&ak=GgWIqg7xAR9Umd3Uenr2fEMhAaFWTAnN&services=&t=20200103103842&s=1"></script>
+<script src="images/jquery.min.js"></script>
+<script type="text/javascript">
+
+	var index = new Vue({
+		el: "#esmap",
+		data: {
+			geoServerUrl: "http://localhost:8033/esmap",
+
+			map: {},
+			topLeft: {
+				lon: 118.790655,
+				lat: 32.029675
+			},
+			bottomRight: {
+				lon: 118.801111,
+				lat: 32.025328
+			},
+			geoSearchResult: [],
+			searchMultiPoint:[],		// 多个点构建的多边形搜索数组
+
+			distanceSel: 1,
+			searchTxt: ""
+		},
+		mounted() {
+			//this.initMap();
+		},
+		created() {
+			
+		},
+		methods: {
+			alertWindows(){
+				document.getElementById('zhezhao').style.display="";
+			},
+			hidder() {
+		       document.getElementById('zhezhao').style.display="none";
+	},
+			changePre(){
+				var data = document.getElementsByName("Fruit");
+				var s = "";
+				for (let dataKey in data) {
+					if (data[dataKey].checked){
+						s += data[dataKey].value + ",";
+					}
+				}
+				console.log("所有选择"+s);
+				var page = "user/pref";
+				$.get(
+						page,
+						{"genres":s},
+						function (result) {
+							if (result == "success"){
+								$('#zhezhao').hide();
+								var me = this;
+								// 百度地图API功能
+								var map = new BMap.Map("allmap", {enableMapClick:false});    // 创建Map实例
+								me.map = map;
+								// 中心点为夫子庙
+								me.map.centerAndZoom(new BMap.Point(118.795254, 32.026904), 17);  // 初始化地图,设置中心点坐标和地图级别
+								var geolocation = new BMap.Geolocation();
+								geolocation.enableSDKLocation();
+								geolocation.getCurrentPosition(function(r){
+									if(this.getStatus() == BMAP_STATUS_SUCCESS){
+										var iconCenter = new BMap.Icon("/img/center.png", new BMap.Size(25, 35));
+										var markerCenter = new BMap.Marker(r.point,{icon:iconCenter});  // 创建标注
+										me.map.addOverlay(markerCenter);
+										me.map.centerAndZoom(r.point, 17);  // 初始化地图,设置中心点坐标和地图级别
+										var optsCenter = {
+											position : r.point,    			 // 指定标注下方的文字、文本标注所在的地理位置
+											offset   : new BMap.Size(-40, 20)    //设置文本偏移量
+										};
+										var labelCenter = new BMap.Label("你的位置", optsCenter);  // 创建文本标注对象
+										labelCenter.setStyle({
+											color : "green",
+											borderColor : "green",
+											fontSize : "12px",
+											height : "20px",
+											lineHeight : "20px",
+											fontFamily:"微软雅黑"
+										});		// 设置字体的样式
+										me.map.addOverlay(labelCenter);
+									}
+									else {
+										alert('failed'+this.getStatus());
+									}
+
+									//********************************************************************************
+									var center = new BMap.Point(r.point.lng,r.point.lat);
+									getnearhousePlace(center);
+									//	getwishhousePlace(center);
+									getHotHousePlace(center);
+								},{enableHighAccuracy: true});
+								//搜索框：******************************************************************************************************
+								//只能搜索地图的内容智能提示
+								//*********************************************************************************************
+								function G(id) {
+									return document.getElementById(id);
+								}
+								var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+										{"input" : "suggestId"
+											,"location" : map
+										});
+								ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+									var str = "";
+									var _value = e.fromitem.value;
+									var value = "";
+									if (e.fromitem.index > -1) {
+										value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+									}
+									str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+									value = "";
+									if (e.toitem.index > -1) {
+										_value = e.toitem.value;
+										value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+									}
+									str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+									G("searchResultPanel").innerHTML = str;
+								});
+								var myValue;
+								ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+									var _value = e.item.value;
+									myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+									G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+									setPlace();
+								});
+								function getnearhousePlace(center){
+									var centerP = createGEOPointEntity(center);
+									axios.post('/esmap/ngeoDistance',centerP).then(res =>{
+												var pointResultArr = res.data;
+												for (var i = 0 ; i < pointResultArr.length ; i ++) {
+													var pointTemp = pointResultArr[i];
+						//							map.geoSearchResult.push(pointTemp);
+													var point = new BMap.Point(pointTemp.lon, pointTemp.lai);
+													var marker = new BMap.Marker(point);
+													var content ='<a href="/house_detail?pid='+pointTemp.pid+'"><h4 style="margin:0 0 5px 0;padding:0.2em 0">'+pointTemp.name+'</h4></a>'+'<div style="margin:0;line-height:20px;padding:2px;">' +
+															'<img src="/houseImg/'+pointTemp.pid+'.jpg" alt="" style="float:right;zoom:1;overflow:hidden;width:100px;height:100px;margin-left:3px;"/>'+
+															'地址：'+pointTemp.place+
+															'<br/>房型：'+ pointTemp.singleType + '<br/>面积：'+pointTemp.size+'<br>装修类型：'+pointTemp.directType+
+															'<br/>楼层：'+pointTemp.singleLayer+'<br/>出租类型：'+pointTemp.rentType+'<br/>价格：'+pointTemp.price+'/月';
+													me.map.addOverlay(marker);
+													var clickopts = {
+														width : 400,     // 信息窗口宽度
+														height: 165,     // 信息窗口高度
+														//title : pointTemp.name , // 信息窗口标题
+														enableMessage:true//设置允许信息窗发送短息
+													};
+													addMouseOverHandler(content,marker);
+													var opts = {
+														position : point,    			 // 指定标注下方的文字、文本标注所在的地理位置
+														offset   : new BMap.Size(-45, 5)    //设置文本偏移量
+													};
+													var labels = new BMap.Label(pointTemp.name+"-"+pointTemp.dis+"km", opts);  // 创建文本标注对象
+													labels.setStyle({
+														color : "black",
+														borderColor : "black",
+														fontSize : "12px",
+														height : "20px",
+														lineHeight : "20px",
+														fontFamily:"微软雅黑"
+													});		// 设置字体的样式
+													me.map.addOverlay(labels);
+												}
+												//**********************************对鼠标触碰标注显示事件开始***************************************
+												function addMouseOverHandler(content,marker){
+													marker.addEventListener("mouseover",function (e) {
+														openInfo(content,e);
+													})
+												}
+												function openInfo(content,e){
+													var p = e.target;
+													var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+													var infoWindow = new BMap.InfoWindow(content,clickopts);
+													me.map.openInfoWindow(infoWindow,point);
+												}
+												//**********************************对对个地点点击标注事件结束***************************************
+											}
+									)
+								}
+								function getwishhousePlace(center){
+									var centerP = me.createGEOPointEntity(center);
+									axios.post('/esmap/lgeoDistance',centerP).then(res =>{
+												var pointResultArr = res.data;
+												for (var i = 0 ; i < pointResultArr.length ; i ++) {
+													var pointTemp = pointResultArr[i];
+													me.geoSearchResult.push(pointTemp);
+													var point = new BMap.Point(pointTemp.lon, pointTemp.lai);
+													var content ='<a href="/house_detail?pid='+pointTemp.pid+'"><h4 style="margin:0 0 5px 0;padding:0.2em 0">'+pointTemp.name+'</h4></a>'+'<div style="margin:0;line-height:20px;padding:2px;">' +
+															'<img src="/houseImg/'+pointTemp.pid+'.jpg" alt="" style="float:right;zoom:1;overflow:hidden;width:100px;height:100px;margin-left:3px;"/>'+
+															'地址：'+pointTemp.place+
+															'<br/>房型：'+ pointTemp.singleType + '<br/>面积：'+pointTemp.size+'<br>装修类型：'+pointTemp.directType+
+															'<br/>楼层：'+pointTemp.singleLayer+'<br/>出租类型：'+pointTemp.rentType+'<br/>价格：'+pointTemp.price+'/月';
+													var singleMarker = new BMap.Marker(point);
+													me.map.addOverlay(singleMarker);
+													var clickopts = {
+														width : 400,     // 信息窗口宽度
+														height: 165,     // 信息窗口高度
+														//title : pointTemp.name , // 信息窗口标题
+														enableMessage:true//设置允许信息窗发送短息
+													};
+													addMouseOverHandler(content,singleMarker);
+													var opts = {
+														position : point,    			 // 指定标注下方的文字、文本标注所在的地理位置
+														offset   : new BMap.Size(-45, 5)    //设置文本偏移量
+													};
+													var labels = new BMap.Label(pointTemp.name+"-"+pointTemp.dis+"km", opts);  // 创建文本标注对象
+													labels.setStyle({
+														color : "black",
+														borderColor : "black",
+														fontSize : "12px",
+														height : "20px",
+														lineHeight : "20px",
+														fontFamily:"微软雅黑"
+													});		// 设置字体的样式
+													me.map.addOverlay(labels);
+												}
+												//**********************************对鼠标触碰标注显示事件开始***************************************
+												function addMouseOverHandler(content,marker){
+													marker.addEventListener("mouseover",function (e) {
+														openInfo(content,e);
+													})
+												}
+												function openInfo(content,e){
+													var p = e.target;
+													var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+													var infoWindow = new BMap.InfoWindow(content,clickopts);
+													me.map.openInfoWindow(infoWindow,point);
+												}
+												//**********************************对对个地点点击标注事件结束***************************************
+											}
+									)
+								};
+								function createGEOPointEntity(position) {
+									var point = {
+										"lon": position.lng,
+										"lat": position.lat
+									};
+									return point;
+								};
+								function getHotHousePlace(center){
+									var centerP = createGEOPointEntity(center);
+									axios.post('/esmap/hotPlace',centerP).then(res =>{
+												var pointResultArr = res.data;
+												for (var i = 0 ; i < pointResultArr.length ; i ++) {
+													var pointTemp = pointResultArr[i];
+												//	map.geoSearchResult.push(pointTemp);
+													var point = new BMap.Point(pointTemp.lon, pointTemp.lai);
+													var content ='<a href="/house_detail?pid='+pointTemp.pid+'"><h4 style="margin:0 0 5px 0;padding:0.2em 0">'+pointTemp.name+'</h4></a>'+'<div style="margin:0;line-height:20px;padding:2px;">' +
+															'<img src="/houseImg/'+pointTemp.pid+'.jpg" alt="" style="float:right;zoom:1;overflow:hidden;width:100px;height:100px;margin-left:3px;"/>'+
+															'地址：'+pointTemp.place+
+															'<br/>房型：'+ pointTemp.singleType + '<br/>面积：'+pointTemp.size+'<br>装修类型：'+pointTemp.directType+
+															'<br/>楼层：'+pointTemp.singleLayer+'<br/>出租类型：'+pointTemp.rentType+'<br/>价格：'+pointTemp.price+'/月';
+													var iconTouch = new BMap.Icon("/img/multi.png", new BMap.Size(25, 35));
+													var singleMarker = new BMap.Marker(point,{icon:iconTouch});
+													me.map.addOverlay(singleMarker);
+													var clickopts = {
+														width : 400,     // 信息窗口宽度
+														height: 165,     // 信息窗口高度
+														//title : pointTemp.name , // 信息窗口标题
+														enableMessage:true//设置允许信息窗发送短息
+													};
+													addMouseOverHandler(content,singleMarker);
+													var opts = {
+														position : point,    			 // 指定标注下方的文字、文本标注所在的地理位置
+														offset   : new BMap.Size(-45, 5)    //设置文本偏移量
+													};
+													var labels = new BMap.Label(pointTemp.name+"-"+pointTemp.dis+"km", opts);  // 创建文本标注对象
+													labels.setStyle({
+														color : "black",
+														borderColor : "black",
+														fontSize : "12px",
+														height : "20px",
+														lineHeight : "20px",
+														fontFamily:"微软雅黑"
+													});		// 设置字体的样式
+													me.map.addOverlay(labels);
+												}
+												//**********************************对鼠标触碰标注显示事件开始***************************************
+												function addMouseOverHandler(content,marker){
+													marker.addEventListener("mouseover",function (e) {
+														openInfo(content,e);
+													})
+												}
+												function openInfo(content,e){
+													var p = e.target;
+													var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+													var infoWindow = new BMap.InfoWindow(content,clickopts);
+													me.map.openInfoWindow(infoWindow,point);
+												}
+												//**********************************对对个地点点击标注事件结束***************************************
+											}
+									)
+								}
+
+								function setPlace(){
+									map.clearOverlays();    //清除地图上所有覆盖物
+									function myFun(){
+										var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+										map.centerAndZoom(pp, 18);
+										var iconCenter = new BMap.Icon("/img/center.png", new BMap.Size(25, 35));
+										var markerCenter = new BMap.Marker(pp,{icon:iconCenter});  // 创建标注
+										map.addOverlay(markerCenter);    //添加标注
+										var optsCenter = {
+											position : pp,    			 // 指定标注下方的文字、文本标注所在的地理位置
+											offset   : new BMap.Size(-40, 20)    //设置文本偏移量
+										};
+										var labelCenter = new BMap.Label(local.getResults().keyword, optsCenter);  // 创建文本标注对象
+										labelCenter.setStyle({
+											color : "green",
+											borderColor : "green",
+											fontSize : "12px",
+											height : "20px",
+											lineHeight : "20px",
+											fontFamily:"微软雅黑"
+										});		// 设置字体的样式
+										map.addOverlay(labelCenter);
+										getnearhousePlace(pp);
+										getHotHousePlace(pp);
+									}
+									var local = new BMap.LocalSearch(map, { //智能搜索
+										onSearchComplete: myFun
+									});
+									local.search(myValue);
+								}
+
+								//添加地图类型控件
+								me.map.addControl(new BMap.MapTypeControl({
+									mapTypes:[
+										BMAP_NORMAL_MAP,
+										BMAP_HYBRID_MAP
+									]}));
+								me.map.setCurrentCity("南京");			// 设置地图显示的城市 此项是必须设置的
+								map.enableScrollWheelZoom(true);     	//开启鼠标滚轮缩放
+								me.map.disableDoubleClickZoom();		// 禁止双击放大地图
+								me.map.setMapStyle("/json/custom_map_config.json");
+
+							}
+						}
+				);
+
+				function initMap() {
+
+
+				}
+			},
+
+
+			// 清除地图上的搜索结果
+			reFreshMap(){
+				var me = this;
+				var allOverlay = me.map.getOverlays();
+				for (var i = 0; i < allOverlay.length; i++){
+
+					var mapPoint = allOverlay[i].point;
+					//console.log("mapPoint: "+mapPoint);
+					if (mapPoint == null || mapPoint == undefined) {
+						continue;
+					}
+
+					for (var j = 0 ; j < me.geoSearchResult.length ; j ++) {
+						var tmpPoint = me.geoSearchResult[j];
+						//console.log("tmpPoint: "+tmpPoint)
+						if (mapPoint.lng == tmpPoint.lon && mapPoint.lat == tmpPoint.lai) {
+							me.map.removeOverlay(allOverlay[i]);
+						}
+					}
+
+				}
+
+				me.geoSearchResult = [];
+			},
+
+			// 根据坐标解析地址
+			getCNAddress(newPoint) {
+				var geocoder = new BMap.Geocoder();
+				geocoder.getLocation(newPoint, function(rs){
+					var addComp = rs.addressComponents;
+					place = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
+					console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+					return place;
+				});
+			},
+		}
+	});
+</script>
+</html>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="73cd951f-14b4-4c4e-aaf9-78287fb6f29e" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="D:/apache-maven-3.6.1-bin/apache-maven-3.6.1" />
+        <option name="userSettingsFile" value="D:\apache-maven-3.6.1-bin\apache-maven-3.6.1\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1fo0PxRH1JHPWgpxa0oIKdPKcmJ" />
+  <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../HouseRent" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="fileTemplates" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\IntelliJ IDEA-workspace\Rent-spiderData\src\main\resources" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Houses">
+    <configuration name="Houses" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.rent.spider.Houses" />
+      <module name="Rent-spiderData" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.rent.spider.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PageDownLoadUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.rent.spider.utils.PageDownLoadUtil" />
+      <module name="Rent-spiderData" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.rent.spider.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StartHouse" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.rent.spider.start.StartHouse" />
+      <module name="Rent-spiderData" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.rent.spider.start.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.rent.spider.test" />
+      <module name="Rent-spiderData" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.rent.spider.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Houses" />
+        <item itemvalue="Application.test" />
+        <item itemvalue="Application.StartHouse" />
+        <item itemvalue="Application.PageDownLoadUtil" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="73cd951f-14b4-4c4e-aaf9-78287fb6f29e" name="Default Changelist" comment="" />
+      <created>1596869117512</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1596869117512</updated>
+      <workItem from="1596869122655" duration="11061000" />
+      <workItem from="1597022791018" duration="24780000" />
+      <workItem from="1597129923432" duration="2937000" />
+      <workItem from="1597137302974" duration="450000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="361" y="74" key="#Project_Structure" timestamp="1596874533456">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="74" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1596874533456" />
+    <state x="958" y="106" key="#com.intellij.ide.util.MemberChooser" timestamp="1596873097936">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="958" y="106" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1596873097936" />
+    <state x="549" y="171" key="FileChooserDialogImpl" timestamp="1597137770518">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="171" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1597137770518" />
+    <state width="1493" height="342" key="GridCell.Tab.0.bottom" timestamp="1597136255602">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="342" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1597136255602" />
+    <state width="1493" height="342" key="GridCell.Tab.0.center" timestamp="1597136255602">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="342" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1597136255602" />
+    <state width="1493" height="342" key="GridCell.Tab.0.left" timestamp="1597136255601">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="342" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1597136255601" />
+    <state width="1493" height="342" key="GridCell.Tab.0.right" timestamp="1597136255602">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="342" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1597136255602" />
+    <state x="272" y="58" key="SettingsEditor" timestamp="1596871997609">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="272" y="58" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1596871997609" />
+    <state x="461" y="241" key="com.intellij.ide.util.TipDialog" timestamp="1597137650502">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="461" y="241" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1597137650502" />
+    <state x="178" y="117" key="new project wizard" timestamp="1597039286746">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="178" y="117" key="new project wizard/0.0.1536.824@0.0.1536.824" timestamp="1597039286746" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1597028017551">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1597028017551" />
+  </component>
+</project>
