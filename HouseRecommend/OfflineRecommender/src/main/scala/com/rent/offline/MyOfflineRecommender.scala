@@ -49,7 +49,7 @@ object MyOfflineRecommender {
 
     //加载
     val browseRDD = spark.read
-      .option("uri",mongoConfig.uri)
+      .option("uri",mongoConfig.uri)      
       .option("collection",MONGO_BROWSE_COLLECTION)
       .format("com.mongodb.spark.sql")
       .load()

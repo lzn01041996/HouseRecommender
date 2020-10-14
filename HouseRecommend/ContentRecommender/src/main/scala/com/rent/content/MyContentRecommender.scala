@@ -2,10 +2,12 @@ package com.rent.content
 
 import java.util
 
+import com.mongodb.casbah.commons.MongoDBObject
+import com.mongodb.casbah.{MongoClient, MongoClientURI}
 import com.rent.content.Kmeans.centers
 import org.apache.spark.SparkConf
 import org.apache.spark.ml.feature.{HashingTF, IDF, Tokenizer}
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{DataFrame, SparkSession}
 
 import scala.util.Random
 import scala.util.control.Breaks.{break, breakable}
@@ -30,7 +32,7 @@ Happy,happy everyday!
 //        "underPlace" : "距离3号线浮桥站约261米空房",
 //        "schoolPlace" : "南京师范大学附属小学（珠江路校区）",
 //        "price" : 12500
-case class Houses(hid:Double,singleType:String,size:Double,directType:Int,layer:Double,rentType:Int,underPlace:String,schoolPlace:String,price:Double)
+case class Houses(hid:Int,singleType:String,size:Double,directType:Int,singleLayer:Double,rentType:Int,underPlace:String,schoolPlace:String,price:Double)
 //case class MongoConfig(uri: String,db:String)
 //一个基准的推荐对象
 //case class Recommendation(hid: Int, count: Double)
@@ -38,6 +40,7 @@ case class Houses(hid:Double,singleType:String,size:Double,directType:Int,layer:
 //case class HouseRecs(hid: Int, recs:Seq[Recommendation])
 case class HouseType(hid:Int,size:Double,layer:Double,price:Double,types:Double)
 case class HouseT(size:Double,layer:Double,price:Double,types:Double)
+
 
 object MyContentRecommender {
 
@@ -71,9 +74,9 @@ object MyContentRecommender {
       .load()
       .as[Houses]
       .map(
-        x => (x.hid,x.size/10,x.layer,x.price/1000)
+        x => (x.hid,x.size/10,x.singleLayer,x.price/1000)
       )
-      .toDF("hid","size","layer","price")
+      .toDF("hid","size","singleLayer","price")
       .cache()
 
     val point = housesDF.collect().map(line =>{
@@ -84,7 +87,7 @@ object MyContentRecommender {
       vector
     }).toArray
 
-    point.foreach(println)
+  // point.foreach(println)
   //  housesDF.collect().foreach(println)
     val kmeans = new KmeansPP
     kmeans.initialCenters(point,centers)
@@ -98,21 +101,49 @@ object MyContentRecommender {
       pointsLabel(i) = centers.indexOf(closestCenter)
     }
     var i = -1
+
+    var hidData = new Array[Int](point.length)
+
     val pointTypeData = point.map( f =>{
       //HouseType(f(0),f(1),f(2),pointsLabel(i))
       i = i + 1
-      HouseT(f(0),f(1),f(2),pointsLabel(i))
+      var a:Int = housesDF.collect()(i).get(0).asInstanceOf[Int]
+      HouseType(a,f(0),f(1),f(2),pointsLabel(i))
     }).toList
 
     val typeData = spark.createDataFrame(pointTypeData)
-    val resultData = housesDF.join(typeData).map{
-      item =>
-        HouseType(housesDF.col("hid"),housesDF.col("size"),housesDF.col("layer"),housesDF.col("price"),typeData.col("types"))
-    }
-    typeData.collect().foreach(println)
+
+    //storeDataInMongoDB(typeData)
+
+    //********************基于得到的不同类型的聚类中心，开始将各自的聚类中心的不同的类型分别放入同一个列表中********************************************
+
+    val typesDF = spark.sql("select hid,types from PriceBasedHouseRecs group by hid")
+    typesDF.collect().foreach(println)
+
+    //********************************************************************************************************************************************
+
+    spark.stop()
+  }
+
+  def storeDataInMongoDB(browseDF: DataFrame)(implicit mongoConfig: MongoConfig): Unit ={
+    // 新建一个mongodb的连接
+    val mongoClient = MongoClient(MongoClientURI(mongoConfig.uri))
+
+    // 如果mongodb中已经有相应的数据库，先删除
+    mongoClient(mongoConfig.db)(HOUSE_PRICE_RECS).dropCollection()
+    // 将DF数据写入对应的mongodb表中
+    browseDF.write
+      .option("uri", mongoConfig.uri)
+      .option("collection", HOUSE_PRICE_RECS)
+      .mode("append")
+      .format("com.mongodb.spark.sql")
+      .save()
+
+    //对数据表建索引
+    mongoClient(mongoConfig.db)(HOUSE_PRICE_RECS).createIndex(MongoDBObject("hid" -> 1))
 
 
-
+    mongoClient.close()
 
   }
 }

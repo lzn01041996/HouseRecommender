@@ -35,7 +35,7 @@ public class MongoUserController {
             return "fail";
         }
         request.getSession().setAttribute("loginuser",user.getName());
-        System.out.println("username"+username);
+        System.out.println("登录进来的用户名："+username);
         if (user.getFirst() == null){
             user.setFirst("false");
             userService.updateUser(user);

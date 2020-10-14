@@ -4,7 +4,7 @@ import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.{MongoClient, MongoClientURI}
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.spark.SparkConf
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.streaming.kafka010.{ConsumerStrategies, KafkaUtils, LocationStrategies}
 import redis.clients.jedis.Jedis
@@ -29,6 +29,9 @@ case class Recommendation(hid: Int, count: Double)
 case class UserRecs(uid: Int, recs:Seq[Recommendation])
 //基于LFM的房子之间的相似推荐
 case class HouseRecs(hid: Int, recs:Seq[Recommendation])
+
+case class HouseType(hid:Int,size:Double,layer:Double,price:Double,types:Double)
+
 object StreamRecommender {
 
   val MAX_USER_BROWSE_NUM = 20
@@ -36,6 +39,8 @@ object StreamRecommender {
   val MONGODB_STREAM_REC_COLLECTION = "StreamRecs"
   val MONGODB_BROWSE_COLLECTION = "Browse"
   val MONGODB_HOUSE_RECS_COLLECTION = "HouseRecs"
+  val HOUSE_PRICE_RECS = "PriceBasedHouseRecs"
+
 
   def main(args: Array[String]): Unit = {
     val config = Map(
@@ -57,6 +62,16 @@ object StreamRecommender {
     import spark.implicits._
 
     implicit val mongoConfig = MongoConfig(config("mongo.uri"), config("mongo.db"))
+
+    val priceDF = spark.read
+      .option("uri",mongoConfig.uri)
+      .option("collection",HOUSE_PRICE_RECS)
+      .format("com.mongodb.spark.sql")
+      .load()
+      .as[HouseType]
+      .toDF()
+
+    priceDF.createOrReplaceTempView("PriceBasedHouseRecs")
 
     val simHouseMatrix = spark.read
       .option("uri",mongoConfig.uri)
@@ -88,19 +103,23 @@ object StreamRecommender {
         val attr = msg.value().split("\\|")
         (attr(0).toInt,attr(1).toInt,attr(2).toDouble)
     }
+
     //流式数据处理，核心实时算法
     browseStream.foreachRDD{
       rdds => rdds.foreach{
         case(uid,hid,browse) =>{
-          println("browse data coming!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+          println("浏览数据出现!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
           //1.从redis里获取当前用户最近的浏览的房子的浏览量
           val userRecentlyBrowse = getUserRecentlyBrowse(MAX_USER_BROWSE_NUM,uid,ConnHelper.jedis)
-
+          //3.根据房子的价格做聚类分析
+          println(hid)
+          val sparks = SparkSession.builder().config(sparkConf).getOrCreate()
+          val priceDataDF = getPriceSimis(hid,sparks)
           //2. 从相似度矩阵中取出当前房源中最相似的N个房子，作为备选列表
-          val candidateHouses = getTopSimHouses(MAX_SIM_HOUSE_NUM,hid,uid,simHouseMatrixBroadCast.value)
-          //3.对每个备选的房源，计算推荐的优先级，得到当前用户的实时推荐列表
+          val candidateHouses = getTopSimHouses(MAX_SIM_HOUSE_NUM,hid,uid,simHouseMatrixBroadCast.value,priceDataDF.collect().toArray)
+          //4.对每个备选的房源，计算推荐的优先级，得到当前用户的实时推荐列表
           val streamRecs = computeHouseBrowses(candidateHouses,userRecentlyBrowse,simHouseMatrixBroadCast.value)
-          //4.把推荐的数据保存到MongoDB中
+          //5.把推荐的数据保存到MongoDB中
           saveDataToMongoDB(uid,streamRecs)
         }
       }
@@ -108,13 +127,23 @@ object StreamRecommender {
     //开始接受数据
     ssc.start()
 
-    println(">>>>>>>>>>>>>>>>>>>>>>>>>>>streaming started!")
+    println(">>>>>>>>>>>>>>>>>>>>>>>>>>>流式处理新进来的数据!")
 
     ssc.awaitTermination()
   }
 
   //redis操作返回的是java类，为了用map需要引入转换类
   import scala.collection.JavaConversions._
+
+
+  def getPriceSimis(hid:Int,sparkSession: SparkSession): DataFrame = {
+    val pricesDataDF = sparkSession.sql("select types from PriceBasedHouseRecs where hid = " + hid )
+    val list : Array[Any] = pricesDataDF.collect().toArray
+    val s : String = list(0).toString.replace("[","").replace("]","")
+    println("s" + s)
+    val priceDataDF = sparkSession.sql("select hid from PriceBasedHouseRecs where types = " + s)
+    priceDataDF
+  }
 
   def getUserRecentlyBrowse(num: Int, uid: Int, jedis: Jedis): Array[(Int, Double)] = {
     //从redis读取数据，用户的浏览数据保存在uid:UID 为key的队列里，value是HID:BROWSE
@@ -126,11 +155,13 @@ object StreamRecommender {
       }.toArray
   }
 
+
   //获取跟当前的房源做相似的num个房子，作为备选房源
-  def getTopSimHouses(num: Int, hid: Int, uid: Int, simHouses: scala.collection.Map[Int, scala.collection.immutable.Map[Int, Double]])
+  def getTopSimHouses(num: Int, hid: Int, uid: Int, simHouses: scala.collection.Map[Int, scala.collection.immutable.Map[Int, Double]],priceSimi:Array[Any]
+                     )
     (implicit mongoConfig: MongoConfig): Array[Int] ={
     //1.从相似矩阵中拿到所有相似的房源
-    val allSimHouses = simHouses(hid).toArray
+    var allSimHouses = simHouses(hid).toArray
     //2.从mongodb中查询用户已经浏览过的房源
     val browseExist = ConnHelper.mongoClient(mongoConfig.db)(MONGODB_BROWSE_COLLECTION)
       .find(MongoDBObject("uid" -> uid))
@@ -139,10 +170,12 @@ object StreamRecommender {
         item => item.get("hid")
       }
     //3.把看过的过滤，得到输出列表
-    allSimHouses.filter( x=> ! browseExist.contains(x._1))
+    val res = allSimHouses.filter( x=> ! browseExist.contains(x._1)).filter( x => !priceSimi.contains(x._1))
       .sortWith(_._2>_._2)
       .take(num)
       .map( x=>x._1)
+    res ++ priceSimi
+    res
   }
 
   def computeHouseBrowses(candidateHouses: Array[Int],
