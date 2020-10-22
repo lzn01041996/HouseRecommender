@@ -34,7 +34,6 @@ object Kmeans {
         vector ++= Vector(parts(i))
       vector
     }).toArray
-    points.foreach(println)
 
     initialCenters(points)
     kmeansppInitial(points)
@@ -166,12 +165,23 @@ object Kmeans {
       move = 0.0
       currentCost = computeCost(points,centers)
       val cluster = points.groupBy(v => closestCenter(centers,v))
+      println("cluster: ")
+      cluster.foreach(println)
+      println("****************************************")
+      println("改变聚类中心的点开始：")
+
       newCenters =
         centers.map(oldCenter => {
+          println("oldCenter: " + oldCenter)
+          println(cluster.get(oldCenter).foreach(println))
           cluster.get(oldCenter) match {
             //找到该聚类中心所拥有的点集
             case Some(pointsInThisCluster) =>
               //均作为新的聚类中心
+              println("pointsInThisCluster: ")
+              println("++++++++++++++++++++++++++")
+              pointsInThisCluster.foreach(println)
+              println("++++++++++++++++++++++++++")
               vectorDivide(pointsInThisCluster.reduceLeft((v1,v2) => vectorAdd(v1,v2)),pointsInThisCluster.length)
             case None => oldCenter
           }
@@ -257,6 +267,7 @@ object Kmeans {
     for(i <- 0 to v.length - 1){
       r = r.updated(i,r(i) / num)
     }
+    println("r: " + r)
     r
   }
 

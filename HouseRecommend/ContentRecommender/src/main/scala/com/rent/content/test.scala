@@ -18,41 +18,8 @@ object test {
     val a:Double = 2.0
     println(closestCenter(array,a))
 
-    var arr  =new Array[Vector[Double]](5)
-    var vector = Vector[Double]()
-    vector ++= Vector(3.5)
-    vector ++= Vector(3.5)
-    vector ++= Vector(3.5)
-    arr(0) = vector
-
-    var vector1= Vector[Double]()
-    vector1 ++= Vector(2.5)
-    vector1 ++= Vector(2.5)
-    vector1 ++= Vector(2.5)
-    arr(1) = vector1
-
-    var vector2 = Vector[Double]()
-    vector2 ++= Vector(3.8)
-    vector2 ++= Vector(3.8)
-    vector2 ++= Vector(3.8)
-    arr(2) = vector2
-
-    var vector3 = Vector[Double]()
-    vector3 ++= Vector(6.8)
-    vector3 ++= Vector(6.8)
-    vector3 ++= Vector(6.8)
-    arr(3) = vector3
-
-    var vector4 = Vector[Double]()
-    vector4 ++= Vector(3.5)
-    vector4 ++= Vector(3.5)
-    vector4 ++= Vector(3.5)
-    arr(4) = vector4
-
-    val newArray = array ++ arr
-    for (elem <- newArray) {
-      println("elem : " + elem)
-    }
+    var sum = array.reduceLeft((a,b) => a + b)
+    println(sum)
 
   }
 

@@ -63,6 +63,18 @@ class KmeansPP {
       sum = pointsAndDist.reduceLeft((a,b) => a + b)
       println("sum=="+ sum)
       flag = true
+
+      /*1.输入的数据点集合中随机选择一个点作为第一个聚类中心
+      * 2.重复选取
+      * 3.对于数据集中的每个样本点x，计算它与最近聚类中心的距离
+      * 4.选择一个新的数据点作为下一个聚类中心，选择的选择是D（x)较大的点，作为聚类中心的概率较大，
+      * 5.直到k个聚类中心被选出来
+      * 6.利用这k个初始的聚类中心来运行标准的k-means算法
+      * 如何将D（x)反映到点被选择的概率的一种算法：
+      * 随机从点集中选择一个点作为初始中心点
+      * 计算每一个点到最近中心点的距离，对所有的距离求和
+      * 再取一个随机值，用权重的方式计算下一个种子数，取随机值，对点集循环做减法，直到那个随机数小于0
+      * 直到k个聚类中心被选出来*/
       while(flag){
         randomSeed = sum * (random.nextInt(100) + 1) / 100
         breakable{
@@ -99,7 +111,7 @@ class KmeansPP {
     var newCost = 0.0
     //根据每个样本最近的聚类中心进行groupBy分组，最后得到的cluster是Map
     //map中的keyJ就是聚类的中心，value就是依赖于该聚类中心的点集
-    while (bool){
+    while (bool){0
       move = 0.0
       currentCost = computeCost(points,centers)
       val cluster = points.groupBy(v => closestCenter(centers,v,centers))
@@ -138,7 +150,7 @@ class KmeansPP {
       }
     }
     costSum
-  }
+    }
 
   def vectorDivide(v:Vector[Double],num:Int):Vector[Double] = {
     var r = v

@@ -54,7 +54,7 @@ object MyContentRecommender {
   def main(args: Array[String]): Unit = {
     val config = Map(
       "spark.cores" -> "local[*]",
-      "mongo.uri" -> "mongodb://localhost:27017/houserec",
+      "mongo.uri" -> "mongodb://localhost1:27017/houserec",
       "mongo.db" -> "houserec"
     )
 
@@ -87,8 +87,7 @@ object MyContentRecommender {
       vector
     }).toArray
 
-  // point.foreach(println)
-  //  housesDF.collect().foreach(println)
+
     val kmeans = new KmeansPP
     kmeans.initialCenters(point,centers)
     kmeans.kmeansppInitial(point,centers)
@@ -101,8 +100,6 @@ object MyContentRecommender {
       pointsLabel(i) = centers.indexOf(closestCenter)
     }
     var i = -1
-
-    var hidData = new Array[Int](point.length)
 
     val pointTypeData = point.map( f =>{
       //HouseType(f(0),f(1),f(2),pointsLabel(i))
