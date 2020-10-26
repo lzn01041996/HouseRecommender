@@ -24,6 +24,7 @@ public class WebThead extends Thread {
         doc= docc;
     }
     private static Logger logger = Logger.getLogger(WebThead.class);
+
     synchronized public void run() {
         Houses.lock.lock();
         try {
@@ -86,6 +87,7 @@ public class WebThead extends Thread {
                     .append(schoolPlace.replace("\t","").replace("\r","").replace("\n","")).append("^")
                     .append(price.replace("\t","").replace("\r","").replace("\n",""));
             logger.info(stringBuilder.toString());
+
 
 
         }

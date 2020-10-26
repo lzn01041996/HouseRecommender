@@ -7,6 +7,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /*
 @李子宁
@@ -17,7 +18,7 @@ Happy,happy everyday!
 */
 public class test {
     public static void main(String[] args) throws IOException {
-        String proxyHost = "127.0.0.1";
+       /* String proxyHost = "127.0.0.1";
         String proxyPort = "11356";
         System.setProperty("http.proxyHost", proxyHost);
         System.setProperty("http.proxyPort", proxyPort);
@@ -29,6 +30,8 @@ public class test {
         Connection connect = Jsoup.connect(link);
         connect.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36");
         Document doc = connect.get();
-        System.out.println(doc.toString());
+        System.out.println(doc.toString());*/
+        String s = "hello";
+        System.out.println(s.substring(2));
     }
 }

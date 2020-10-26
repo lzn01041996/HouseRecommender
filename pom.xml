@@ -16,6 +16,11 @@
         <module>HouseRecommend/StreamingRecommender</module>
         <module>HouseRecommend/ContentRecommender</module>
         <module>HouseRecommend/KafkaStream</module>
+        <module>HouseRecommend/FAQ</module>
+        <module>HouseRecommend/FAQ</module>
+        <module>HouseRecommend/Word2Vec</module>
+        <module>HouseRecommend/FAQ</module>
+        <module>HouseRecommend/FAQTest</module>
     </modules>
     <properties>
         <log4j.version>1.2.17</log4j.version>

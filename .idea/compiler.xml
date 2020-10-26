@@ -6,23 +6,28 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="es" />
-        <module name="DataLoader" />
+        <module name="FAQTest" />
         <module name="Rent-spiderData" />
-        <module name="ContentRecommender" />
-        <module name="OfflineRecommender" />
+        <module name="FAQ" />
+        <module name="es" />
+        <module name="StatisticsRecommender" />
+        <module name="houserec" />
         <module name="foodie" />
         <module name="KafkaStream" />
+        <module name="DataLoader" />
+        <module name="Word2Vec" />
         <module name="HouseRecommend" />
-        <module name="StatisticsRecommender" />
+        <module name="ContentRecommender" />
         <module name="StreamingRecommender" />
-        <module name="houserec" />
+        <module name="OfflineRecommender" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ContentRecommender" target="1.8" />
       <module name="DataLoader" target="1.8" />
       <module name="es" target="1.8" />
+      <module name="FAQ" target="1.8" />
+      <module name="FAQTest" target="1.8" />
       <module name="foodie" target="1.8" />
       <module name="FrontPage" target="1.8" />
       <module name="houserec" target="1.8" />
@@ -33,6 +38,7 @@
       <module name="Rent-spiderData" target="1.8" />
       <module name="StatisticsRecommender" target="1.8" />
       <module name="StreamingRecommender" target="1.8" />
+      <module name="Word2Vec" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
