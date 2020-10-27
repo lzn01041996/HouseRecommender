@@ -85,8 +85,6 @@ public class utils {
             return  total_weight > 0 ? sim_weight / total_weight : 0;
         }else if (method == "vec" || method.equals("vec")){
             //********
-            sim_weight = 0;
-            total_weight = 0;
 
         }
         Set<Integer> set = new HashSet<>();

@@ -7,6 +7,8 @@ import com.huaban.analysis.jieba.WordDictionary;
 import com.huaban.analysis.jieba.viterbi.FinalSeg;
 import org.ansj.domain.Result;
 import org.ansj.domain.Term;
+import org.ansj.splitWord.Analysis;
+import org.ansj.splitWord.analysis.BaseAnalysis;
 import org.ansj.splitWord.analysis.ToAnalysis;
 
 import java.util.List;
@@ -28,13 +30,9 @@ public class testJieba {
                 "国大陆建立了人民代表大会制度的政体。中国有着多彩的民俗文化，传统艺术形式有诗词、戏曲、书法和国画等，春节、元宵、清明、端" +
                 "" +
                 "午、中秋、重阳等是中国重要的传统节日.";
-        JiebaSegmenter segmenter = new JiebaSegmenter();
-        String str = "欢迎使用ansj_seg,(ansj中文分词)在这里如果你遇到什么问题都可以联系我.我一定尽我所能.帮助大家.ansj_seg更快,更准,更自由!" ;
-        System.out.println(ToAnalysis.parse(str));
-        Result parse = ToAnalysis.parse(str);
-        for (Term term : parse) {
-            System.out.println(term);
-            System.out.println("name: "+term.getName());
-            System.out.println(term.getNatureStr());
-        }}
+        System.out.println(ToAnalysis.parse(words));
+        System.out.println(BaseAnalysis.parse(words));
+
+
+    }
 }

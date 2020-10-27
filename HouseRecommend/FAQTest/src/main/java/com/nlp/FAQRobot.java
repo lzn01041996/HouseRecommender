@@ -159,7 +159,9 @@ public class FAQRobot {
     public static void main(String[] args) throws Exception {
         FAQRobot robot = new FAQRobot();
         Scanner in = new Scanner(System.in);
-        System.out.println("A: " + robot.answer(in.nextLine(),"simple_pos"));
+        while (true){
+            System.out.println("A: " + robot.answer(in.nextLine(),"simple_pos"));
+        }
 
 
     }

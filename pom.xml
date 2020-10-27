@@ -16,10 +16,7 @@
         <module>HouseRecommend/StreamingRecommender</module>
         <module>HouseRecommend/ContentRecommender</module>
         <module>HouseRecommend/KafkaStream</module>
-        <module>HouseRecommend/FAQ</module>
-        <module>HouseRecommend/FAQ</module>
         <module>HouseRecommend/Word2Vec</module>
-        <module>HouseRecommend/FAQ</module>
         <module>HouseRecommend/FAQTest</module>
     </modules>
     <properties>
