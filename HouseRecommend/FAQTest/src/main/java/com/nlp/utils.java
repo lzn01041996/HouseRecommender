@@ -37,6 +37,7 @@ public class utils {
         POS_WEIGHT.put("l",0.5);//习用语
         POS_WEIGHT.put("m",0.5);//数词
         POS_WEIGHT.put("Ng",0.5);//名语素
+        POS_WEIGHT.put("ng",0.5);
         POS_WEIGHT.put("n",1.0);//名词
         POS_WEIGHT.put("nr",1.0);//人名
         POS_WEIGHT.put("ns",1.0);//地名
@@ -59,6 +60,9 @@ public class utils {
         POS_WEIGHT.put("y",0.5);//语气词
         POS_WEIGHT.put("z",0.5);//状态词
         POS_WEIGHT.put("un",0.3);//未知词
+        POS_WEIGHT.put("uj",0.3);
+        POS_WEIGHT.put("ul",0.3);
+
     }
 
     public Logger getlogger(String name, ReliableLog.LogFile logFile){

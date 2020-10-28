@@ -30,8 +30,9 @@ public class testJieba {
                 "国大陆建立了人民代表大会制度的政体。中国有着多彩的民俗文化，传统艺术形式有诗词、戏曲、书法和国画等，春节、元宵、清明、端" +
                 "" +
                 "午、中秋、重阳等是中国重要的传统节日.";
-        System.out.println(ToAnalysis.parse(words));
-        System.out.println(BaseAnalysis.parse(words));
+        String s = "没有锻炼基础的人，如何增肌与减脂？";
+        System.out.println(ToAnalysis.parse(s));
+
 
 
     }
