@@ -27,7 +27,7 @@ public class Word2VecRaw {
     private static Logger log = LoggerFactory.getLogger(Word2VecRaw.class);
 
     public static void main(String[] args) throws IOException {
-       log.info("*************加载数据************");
+        log.info("*************加载数据************");
         SentenceIterator iter = new LineSentenceIterator(new File("D:\\IntelliJ IDEA-workspace\\HouseRent\\HouseRecommend\\Word2Vec\\src\\main\\resources\\pathToWriteto"));
         iter.setPreProcessor(new SentencePreProcessor() {
             @Override
@@ -62,7 +62,7 @@ public class Word2VecRaw {
         vec.fit();
 
         // 写入词向量
-        WordVectorSerializer.writeWord2VecModel(vec,"pathToWriteto.txt");
+        WordVectorSerializer.writeWord2VecModel(vec, "pathToWriteto.txt");
 
         log.info("最接近的10个词:");
         Collection<String> lst = vec.wordsNearest("抑郁症", 10);

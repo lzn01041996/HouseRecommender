@@ -22,7 +22,7 @@ Happy,happy everyday!
 2020/10/26
 
 */
-class zhishiku{
+class zhishiku {
     double sim = 0;
     ArrayList<String> q = new ArrayList<>();
     String a;
@@ -70,7 +70,8 @@ class zhishiku{
     }
 
     ArrayList<String[]> q_word;
-    zhishiku(){
+
+    zhishiku() {
     }
 
 
@@ -86,24 +87,27 @@ class zhishiku{
                 '}';
     }
 }
+
 public class FAQRobot {
 
-    String zhishitxt ;
+    String zhishitxt;
     int lastTxtLen;
     boolean usedVec;
     ArrayList<zhishiku> zhs = new ArrayList<>();
     public static Logger log = Logger.getLogger(FAQRobot.class);
-    FAQRobot( ) throws Exception {
+
+    FAQRobot() throws Exception {
         this.zhishitxt = "FAQ_减肥.txt";
         this.lastTxtLen = 10;
         this.usedVec = false;
         this.reload();
     }
 
-    FAQRobot(String zhishitxt,boolean usedVec){
+    FAQRobot(String zhishitxt, boolean usedVec) {
         this.zhishitxt = zhishitxt;
         this.usedVec = usedVec;
     }
+
     public void reload() throws Exception {
         load_qa();
         load_embedding();
@@ -111,7 +115,7 @@ public class FAQRobot {
         System.out.println("问答知识库载入完成....");
     }
 
-    public void load_qa() throws Exception{
+    public void load_qa() throws Exception {
         JiebaSegmenter segmenter = new JiebaSegmenter();
         System.out.println("问答知识库开始载入");
         File infile = new File("D:\\IntelliJ IDEA-workspace\\HouseRent\\HouseRecommend\\FAQTest\\src\\main\\resources\\FAQ_减肥.txt");
@@ -121,11 +125,11 @@ public class FAQRobot {
         ArrayList<String> question = new ArrayList<>();
         ArrayList<String[]> qword = new ArrayList<>();
         String answer = "";
-        while ((inString = reader.readLine()) != null){
+        while ((inString = reader.readLine()) != null) {
             int abovetxt = 0;
             if (inString.startsWith("#")) abovetxt = 0;
-            else if (abovetxt != 2){
-                if (inString.startsWith("【问题】")){
+            else if (abovetxt != 2) {
+                if (inString.startsWith("【问题】")) {
                     question.add(inString.substring(4));
                     List<String> list = segmenter.sentenceProcess(inString.substring(4));
                     String[] tmp = new String[list.size()];
@@ -134,9 +138,9 @@ public class FAQRobot {
                     }
                     qword.add(tmp);
                     abovetxt = 2;
-                }else{
+                } else {
                     answer += inString;
-                    if (question.size() != 0){
+                    if (question.size() != 0) {
                         zhishiku zs = new zhishiku();
                         zs.setA(answer);
                         zs.setQ(new ArrayList<>(question));
@@ -152,45 +156,45 @@ public class FAQRobot {
         }
     }
 
-    public void load_embedding() throws Exception{
+    public void load_embedding() throws Exception {
 
     }
 
 
-
-    public String answer(String s,String simType){
-        if (s.equals("") || s == null){
+    public String answer(String s, String simType) {
+        if (s.equals("") || s == null) {
             return "";
         }
         String outtext = "";
-        if (simType == "all" || simType.equals("all")){
-            String[] types = {"simple","simple_pos","vec"};
+        if (simType == "all" || simType.equals("all")) {
+            String[] types = {"simple", "simple_pos", "vec"};
             for (String type : types) {
                 outtext = "method:\t";
                 return "";
             }
-        }else{
-            outtext = maxSimTxt(s,0.1,"simple");
+        } else {
+            outtext = maxSimTxt(s, 0.1, "simple");
         }
         return outtext;
     }
 
-    public String maxSimTxt(String intxt,double simCondision ,String simType){
+    public String maxSimTxt(String intxt, double simCondision, String simType) {
         JiebaSegmenter segmenter = new JiebaSegmenter();
         ArrayList<String> simtype = new ArrayList<>();
         Result parse = ToAnalysis.parse(intxt);
-        simtype.add("simple");simtype.add("simple_pos");
+        simtype.add("simple");
+        simtype.add("simple_pos");
         simtype.add("vec");
-        if (!simtype.contains(simType)){
+        if (!simtype.contains(simType)) {
             return "error: maxSimTxt的simType类型不存在：{}";
         }
-        if ((simType == "vec") || simtype.contains("vec")){
+        if ((simType == "vec") || simtype.contains("vec")) {
             simType = "simple_pos";
         }
         String answer = "";
         double maxs = 0;
         for (zhishiku zh : zhs) {
-            ArrayList< String[]> questions = simType == "vec" ? zh.q_vec :zh.q_word;
+            ArrayList<String[]> questions = simType == "vec" ? zh.q_vec : zh.q_word;
             utils ut = new utils();
             double max = 0;
             for (String[] question : questions) {
@@ -198,15 +202,15 @@ public class FAQRobot {
                 max = max > similarity ? max : similarity;
             }
             zh.setSim(max);
-            if (zh.getSim() > maxs){
+            if (zh.getSim() > maxs) {
                 maxs = zh.getSim();
                 answer = zh.getA();
             }
         }
         zhishiku maxSim = new zhishiku();
-        log.info("maxSim = 0 " +maxs);
+        log.info("maxSim = 0 " + maxs);
 
-        if (maxs < simCondision){
+        if (maxs < simCondision) {
             return "抱歉，我没有理解您的意思。";
         }
 
@@ -218,8 +222,8 @@ public class FAQRobot {
     public static void main(String[] args) throws Exception {
         FAQRobot robot = new FAQRobot();
         Scanner in = new Scanner(System.in);
-        while (true){
-            System.out.println("A: " + robot.answer("男士的小肚腩减肥有什么好办法?","simple_pos"));
+        while (true) {
+            System.out.println("A: " + robot.answer("男士的小肚腩减肥有什么好办法?", "simple_pos"));
         }
 
 

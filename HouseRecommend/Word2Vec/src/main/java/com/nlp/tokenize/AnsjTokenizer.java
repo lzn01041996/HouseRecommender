@@ -18,48 +18,48 @@ import java.util.stream.StreamSupport;
  */
 public final class AnsjTokenizer implements Tokenizer {
 
-  private static final AtomicIntegerFieldUpdater<AnsjTokenizer> INDEX_UPDATER =
-      AtomicIntegerFieldUpdater.newUpdater(AnsjTokenizer.class, "index");
+    private static final AtomicIntegerFieldUpdater<AnsjTokenizer> INDEX_UPDATER =
+            AtomicIntegerFieldUpdater.newUpdater(AnsjTokenizer.class, "index");
 
-  private final String[] a;
-  private final TokenPreProcess tokenPreProcess;
-  private volatile int index = 0;
+    private final String[] a;
+    private final TokenPreProcess tokenPreProcess;
+    private volatile int index = 0;
 
-  AnsjTokenizer(String toTokenize, @NonNull TokenPreProcess tokenPreProcess) {
-    this.a = tokenizeToArray(toTokenize);
-    this.tokenPreProcess = tokenPreProcess;
-  }
+    AnsjTokenizer(String toTokenize, @NonNull TokenPreProcess tokenPreProcess) {
+        this.a = tokenizeToArray(toTokenize);
+        this.tokenPreProcess = tokenPreProcess;
+    }
 
-  private static String[] tokenizeToArray(String toTokenize) {
-    if (StringUtils.isEmpty(toTokenize)) return new String[0];
-    return StreamSupport.stream(ToAnalysis.parse(toTokenize).spliterator(), false)
-        .map(Term::getName)
-        .filter(StringUtils::isNoneEmpty)
-        .toArray(String[]::new);
-  }
+    private static String[] tokenizeToArray(String toTokenize) {
+        if (StringUtils.isEmpty(toTokenize)) return new String[0];
+        return StreamSupport.stream(ToAnalysis.parse(toTokenize).spliterator(), false)
+                .map(Term::getName)
+                .filter(StringUtils::isNoneEmpty)
+                .toArray(String[]::new);
+    }
 
-  @Override
-  public boolean hasMoreTokens() {
-    return index < a.length;
-  }
+    @Override
+    public boolean hasMoreTokens() {
+        return index < a.length;
+    }
 
-  @Override
-  public int countTokens() {
-    return a.length;
-  }
+    @Override
+    public int countTokens() {
+        return a.length;
+    }
 
-  @Override
-  public String nextToken() {
-    return tokenPreProcess.preProcess(a[INDEX_UPDATER.getAndIncrement(this)]);
-  }
+    @Override
+    public String nextToken() {
+        return tokenPreProcess.preProcess(a[INDEX_UPDATER.getAndIncrement(this)]);
+    }
 
-  @Override
-  public List<String> getTokens() {
-    return Arrays.asList(a);
-  }
+    @Override
+    public List<String> getTokens() {
+        return Arrays.asList(a);
+    }
 
-  @Override
-  public void setTokenPreProcessor(TokenPreProcess tokenPreProcessor) {
-    throw new UnsupportedOperationException();
-  }
+    @Override
+    public void setTokenPreProcessor(TokenPreProcess tokenPreProcessor) {
+        throw new UnsupportedOperationException();
+    }
 }

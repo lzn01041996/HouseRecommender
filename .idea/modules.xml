@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/HouseRecommend/ContentRecommender/ContentRecommender.iml" filepath="$PROJECT_DIR$/HouseRecommend/ContentRecommender/ContentRecommender.iml" />
       <module fileurl="file://$PROJECT_DIR$/HouseRecommend/DataLoader/DataLoader.iml" filepath="$PROJECT_DIR$/HouseRecommend/DataLoader/DataLoader.iml" />
       <module fileurl="file://$PROJECT_DIR$/HouseRecommend/FAQTest/FAQTest.iml" filepath="$PROJECT_DIR$/HouseRecommend/FAQTest/FAQTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FQAWeb/FQAWeb.iml" filepath="$PROJECT_DIR$/FQAWeb/FQAWeb.iml" />
       <module fileurl="file://$PROJECT_DIR$/HouseRecommend/HouseRecommend.iml" filepath="$PROJECT_DIR$/HouseRecommend/HouseRecommend.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/HouseRent.iml" filepath="$PROJECT_DIR$/.idea/HouseRent.iml" />
       <module fileurl="file://$PROJECT_DIR$/HouseRecommend/KafkaStream/KafkaStream.iml" filepath="$PROJECT_DIR$/HouseRecommend/KafkaStream/KafkaStream.iml" />

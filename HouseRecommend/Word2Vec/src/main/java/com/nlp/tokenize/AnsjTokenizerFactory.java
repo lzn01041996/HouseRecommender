@@ -13,29 +13,29 @@ import java.io.InputStream;
  */
 public final class AnsjTokenizerFactory implements TokenizerFactory {
 
-  private final TokenPreProcess tokenPreProcess;
+    private final TokenPreProcess tokenPreProcess;
 
-  public AnsjTokenizerFactory(@NonNull TokenPreProcess tokenPreProcess) {
-    this.tokenPreProcess = tokenPreProcess;
-  }
+    public AnsjTokenizerFactory(@NonNull TokenPreProcess tokenPreProcess) {
+        this.tokenPreProcess = tokenPreProcess;
+    }
 
-  @Override
-  public Tokenizer create(String s) {
-    return new AnsjTokenizer(s, tokenPreProcess);
-  }
+    @Override
+    public Tokenizer create(String s) {
+        return new AnsjTokenizer(s, tokenPreProcess);
+    }
 
-  @Override
-  public Tokenizer create(InputStream inputStream) {
-    throw new UnsupportedOperationException();
-  }
+    @Override
+    public Tokenizer create(InputStream inputStream) {
+        throw new UnsupportedOperationException();
+    }
 
-  @Override
-  public TokenPreProcess getTokenPreProcessor() {
-    return tokenPreProcess;
-  }
+    @Override
+    public TokenPreProcess getTokenPreProcessor() {
+        return tokenPreProcess;
+    }
 
-  @Override
-  public void setTokenPreProcessor(TokenPreProcess tokenPreProcess) {
-    throw new UnsupportedOperationException();
-  }
+    @Override
+    public void setTokenPreProcessor(TokenPreProcess tokenPreProcess) {
+        throw new UnsupportedOperationException();
+    }
 }

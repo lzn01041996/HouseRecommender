@@ -23,7 +23,8 @@ diretType: 0毛坯 ， 1 简装， 2 精装
 layer: 0高层， 1低层
 rentType： 1整租   0合租
 
-*///1室1厅^73㎡^精装^低层(共28层)^整租^建邺-奥体-嘉业国际城^有家私电梯^南京师大附中新城小学(南校区)^6500
+*/
+//1室1厅^73㎡^精装^低层(共28层)^整租^建邺-奥体-嘉业国际城^有家私电梯^南京师大附中新城小学(南校区)^6500
 //case class Houses(hid: Int, singleType: String, size: Double, directType: Int, layer: Int, rentType: Int, underPlace: String, schoolPlace: String , price: Int)
 //https://saas-qw1.qfangimg.com/pro/f3d6e3d9-d45f-455b-a889-189758c1bfa7.JPG-240x180	/rent/100239581?insource=rent_list&top=1	亚东名座 亚东名座电梯房新街口精装	1室1厅	47.68㎡	精装	中层(共27层)	整租	秦淮-升州路-亚东名座	距离1号线张府园站约382米有家私随时看房	南京市府西街小学
 //case class House(hid: Int, houseSingleUrl: String, title: String, singleType: String, size: Double, directType: Int, singleLayer: Int, rentType: Int, place: String, underPlace: String, schoolPlace: String , price: Int)

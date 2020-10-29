@@ -16,7 +16,7 @@ object test {
 
 
   def main(args: Array[String]): Unit = {
-    val str  = "hello^thid"
+    val str = "hello^thid"
     println(str.split("\\^")(0))
 
   }
