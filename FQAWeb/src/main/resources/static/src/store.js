@@ -8,7 +8,7 @@ if (!localStorage.getItem(key)) {
         // 登录用户
         user: {
             id: 1,
-            name: 'Coffce',
+            name: '李小宁',
             img: 'dist/images/1.jpg'
         },
         
@@ -32,11 +32,15 @@ if (!localStorage.getItem(key)) {
                 userId: 2,
                 messages: [
                     {
-                        text: 'Hello，这是一个基于Vue + Webpack构建的简单chat示例，聊天记录保存在localStorge。简单演示了Vue的基础特性和webpack配置。',
+                        text: 'Hello，我李小宁哈哈哈。',
                         date: now
                     }, 
                     {
                         text: '项目地址: https://sc.chinaz.com/jiaoben/',
+                        date: now
+                    },
+                    {
+                        text: '这是自己加的',
                         date: now
                     }
                 ]

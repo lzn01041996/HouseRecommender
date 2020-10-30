@@ -10,7 +10,6 @@
             inputing (e) {
                 console.log(this.session.messages);
                 if (e.keyCode === 13 && this.text.length) {
-
                     this.session.messages.push({
                         text: this.text,
                         date: new Date(),

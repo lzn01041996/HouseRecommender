@@ -18,6 +18,7 @@
             // 将日期过滤为 hour:minutes
             time (date) {
                 if (typeof date === 'string') {
+                    console.log("date : " + date);
                     date = new Date(date);
                 }
                 return date.getDay() + ":" + date.getHours() + ':' + date.getMinutes();

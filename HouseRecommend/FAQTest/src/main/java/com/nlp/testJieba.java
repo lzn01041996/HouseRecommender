@@ -31,8 +31,28 @@ public class testJieba {
                 "" +
                 "午、中秋、重阳等是中国重要的传统节日.";
         String s = "没有锻炼基础的人，如何增肌与减脂？";
-        System.out.println(ToAnalysis.parse(s));
+        String tes = "---";
+        String s1 = tes.toUpperCase();
+        String s2 = "hello";
+        String s3 = s2.toUpperCase();
 
+        System.out.println();
+    }
 
+    public String licenseKeyFormatting(String S, int K) {
+        String newString =  S.replace("-","").toUpperCase();
+        if (S.length() <= K){
+            return S.toUpperCase();
+        }
+        int a = newString.length() % K == 0 ? K :  newString.length() % K;
+        StringBuilder sb = new StringBuilder();
+        sb.append(newString.substring(0,a));
+        sb.append("-");
+        while(a <=newString.length() - K){
+            sb.append(newString.substring(a,a+K));
+            sb.append("-");
+            a = a+K;
+        }
+        return sb.toString().substring(0,sb.length()-1);
     }
 }
