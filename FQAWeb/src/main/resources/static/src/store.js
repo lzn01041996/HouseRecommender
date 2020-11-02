@@ -15,6 +15,11 @@ if (!localStorage.getItem(key)) {
         // 用户列表
         userList: [
             {
+                id: 1,
+                name: '李小宁',
+                img: 'dist/images/2.png'
+            },
+            {
                 id: 2,
                 name: '站长素材',
                 img: 'dist/images/2.png'
@@ -47,7 +52,16 @@ if (!localStorage.getItem(key)) {
             },
             {
                 userId: 3,
-                messages: []
+                messages: [
+                    {
+                        text: 'Hello，我李小宁哈哈哈。',
+                        date: now
+                    },
+                    {
+                        text: '项目地址: https://sc.chinaz.com/jiaoben/',
+                        date: now
+                    }
+                ]
             }
         ],
     };

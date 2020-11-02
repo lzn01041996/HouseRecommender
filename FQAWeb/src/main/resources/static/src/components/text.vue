@@ -8,14 +8,13 @@
         },
         methods: {
             inputing (e) {
-                console.log(this.session.messages);
+                window.console.log(e);
                 if (e.keyCode === 13 && this.text.length) {
                     this.session.messages.push({
                         text: this.text,
                         date: new Date(),
                         self: true,
                     });
-
                     this.text = '';
                 }
 

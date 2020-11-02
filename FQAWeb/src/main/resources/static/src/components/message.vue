@@ -4,21 +4,22 @@
         computed: {
             sessionUser () {
                 let users = this.userList.filter(item => item.id === this.session.userId);
-                return users[0];
+                return users[1];
             }
         },
         filters: {
             // 筛选出用户头像
             avatar (item) {
+                console.log("item" + item);
                 // 如果是自己发的消息显示登录用户的头像
                 let user = item.self ? this.user : this.sessionUser;
-                console.log("item" + user);
+
                 return user && user.img;
             },
             // 将日期过滤为 hour:minutes
             time (date) {
+                console.log(date);
                 if (typeof date === 'string') {
-                    console.log("date : " + date);
                     date = new Date(date);
                 }
                 return date.getDay() + ":" + date.getHours() + ':' + date.getMinutes();
@@ -39,7 +40,7 @@
     <div class="m-message" v-scroll-bottom="session.messages">
         <ul>
             <li v-for="item in session.messages">
-                <p class="time"><span>{{item.date | time}}</span></p>
+                <p class="time"><span>{{item.date |time}}</span></p>
                 <div class="main" :class="{ self: item.self }">
                     <img class="avatar" width="30" height="30" :src="item | avatar" />
                     <div class="text">{{item.text}}</div>
