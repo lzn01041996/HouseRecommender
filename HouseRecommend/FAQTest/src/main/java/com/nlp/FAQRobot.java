@@ -223,7 +223,7 @@ public class FAQRobot {
         FAQRobot robot = new FAQRobot();
         Scanner in = new Scanner(System.in);
         while (true) {
-            System.out.println("A: " + robot.answer("男士的小肚腩减肥有什么好办法?", "simple_pos"));
+            System.out.println("A: " + robot.answer(in.nextLine(), "simple_pos"));
         }
 
 

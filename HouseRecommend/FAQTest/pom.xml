@@ -12,6 +12,18 @@
 
     <artifactId>FAQTest</artifactId>
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+            <version></version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.huaban/jieba-analysis -->
         <dependency>
             <groupId>com.huaban</groupId>

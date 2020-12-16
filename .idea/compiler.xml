@@ -8,18 +8,18 @@
         <outputRelativeToContentRoot value="true" />
         <module name="FAQTest" />
         <module name="Rent-spiderData" />
+        <module name="StreamingRecommender" />
+        <module name="ContentRecommender" />
         <module name="KafkaStream" />
         <module name="es" />
         <module name="StatisticsRecommender" />
-        <module name="FQAWeb" />
         <module name="houserec" />
-        <module name="foodie" />
         <module name="DataLoader" />
         <module name="Word2Vec" />
         <module name="FAQWeb" />
         <module name="HouseRecommend" />
-        <module name="ContentRecommender" />
-        <module name="StreamingRecommender" />
+        <module name="FQAWeb" />
+        <module name="foodie" />
         <module name="FAQ" />
         <module name="OfflineRecommender" />
       </profile>
@@ -32,6 +32,7 @@
       <module name="FAQTest" target="1.8" />
       <module name="faqweb" target="1.8" />
       <module name="FAQWeb" target="1.8" />
+      <module name="faqwebtest" target="1.8" />
       <module name="foodie" target="1.8" />
       <module name="FQAWeb" target="1.8" />
       <module name="FrontPage" target="1.8" />
@@ -52,6 +53,7 @@
       <module name="FQAWeb" options="-parameters" />
       <module name="es" options="-parameters" />
       <module name="faqweb" options="-parameters" />
+      <module name="faqwebtest" options="-parameters" />
       <module name="foodie" options="-parameters" />
       <module name="houserec" options="-parameters" />
     </option>

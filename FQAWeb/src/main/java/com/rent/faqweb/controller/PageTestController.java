@@ -18,8 +18,27 @@ public class PageTestController {
         return "test";
     }
 
-    @RequestMapping("/index")
+    @RequestMapping("/")
     public String testIndex(){
         return "index";
+    }
+
+    @RequestMapping("/origin")
+    public String origin(){
+        return "index_origin";
+    }
+
+    @RequestMapping("/chat")
+    public String chat(){
+        return "chattemplate";
+    }
+    @RequestMapping("/onlinechat")
+    public String online(){
+        return "OnlineChat";
+    }
+
+    @RequestMapping("/websocket")
+    public String websocket(){
+        return "websocket";
     }
 }

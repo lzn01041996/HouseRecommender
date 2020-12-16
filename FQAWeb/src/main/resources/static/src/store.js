@@ -1,7 +1,7 @@
 const key = 'VUE-CHAT-v3';
 
 // 虚拟数据
-if (!localStorage.getItem(key)) {
+if (localStorage.getItem(key)) {
     let now = new Date();
     
     let data = {
@@ -9,7 +9,7 @@ if (!localStorage.getItem(key)) {
         user: {
             id: 1,
             name: '李小宁',
-            img: 'dist/images/1.jpg'
+            img: 'dist/images/2.jpg'
         },
         
         // 用户列表

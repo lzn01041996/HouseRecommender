@@ -1,14 +1,14 @@
 <script>
     export default {
-        props: ['user', 'search']
+        props: ['userInfo', 'search']
     };
 </script>
 
 <template>
     <div class="m-card">
         <header>
-            <img class="avatar" width="40" height="40" :alt="user.name" :src="user.img">
-            <p class="name">{{user.name}}</p>
+            <img class="avatar" width="40" height="40" :alt="userInfo.name" :src="userInfo.img">
+            <p class="name">{{userInfo.name}}</p>
         </header>
         <footer>
             <input class="search" type="text" placeholder="search user..." v-model="search">

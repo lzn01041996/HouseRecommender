@@ -1,5 +1,5 @@
 <script>
-    import store from '../store';
+    import store from '../stores';
     import card from './card';
     import list from './list';
     import text from './text';
@@ -11,7 +11,7 @@
             let serverData = store.fetch();
             return {
                 // 登录用户
-                user: serverData.user,
+                user: serverData.userInfo,
                 // 用户列表
                 userList: serverData.userList,
                 // 会话列表
@@ -44,7 +44,6 @@
             card, list, text, message
         }
     };
-
 </script>
 
 <template>
