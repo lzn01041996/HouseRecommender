@@ -11,9 +11,9 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.logging.Logger;
 
 /*
 @李子宁
@@ -29,6 +29,7 @@ public class WebSocketServlet {
     private static int onlineCount = 0;
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
+    public static Logger log = Logger.getLogger("logging");
     FAQRobot robot;
     {
         try {
@@ -53,7 +54,7 @@ public class WebSocketServlet {
         //加入到set当中
         webSockets.add(this);
         addOnlineCount();
-        System.out.println("有新连接加入！当前在线人数为：" + getOnlineCount());
+        log.info("有新连接加入！当前在线人数为：" + getOnlineCount());
     }
 
     //连接关闭调用的方法
@@ -61,25 +62,24 @@ public class WebSocketServlet {
     public void onClose(){
         webSockets.remove(this);
         subOnlineCount();
-        System.out.println("有一连接关闭！当前在线人数:" + getOnlineCount() );
+        log.info("有一连接关闭！当前在线人数:" + getOnlineCount() );
     }
 
     //接受数据
     @OnMessage
     public void OnMessage(String message,Session session){
-        System.out.println("来自客户端的消息：" + message);
+        log.info("来自客户端的消息：" + message);
         //群发消息
         JSONObject jsonObject = JSONObject.parseObject(message);
         String content = jsonObject.getString("data");
-        System.out.println(content);
         JSONObject jsonObject1 = JSONObject.parseObject(content);
         String mine = jsonObject1.getString("mine");
         JSONObject jsonObject2 = JSON.parseObject(mine);
         String content1 = jsonObject2.getString("content");
-        System.out.println(content1);
         for (WebSocketServlet webSocketServlet : webSockets) {
             try {
-                webSocketServlet.sendMessage(robot.answer(content1,"simple_pos"));
+                String simple_pos = robot.answer(content1, "simple_pos");
+                webSocketServlet.sendMessage(simple_pos);
             } catch (Exception e) {
                 e.printStackTrace();
                 continue;
@@ -91,7 +91,7 @@ public class WebSocketServlet {
     //发生错误时调用，错误方法调用玩，会再自动调用@OnClose方法
     @OnError
     public void onError(Throwable error){
-        System.out.println("发生错误！");
+        log.info("发生错误！");
         error.printStackTrace();
     }
 
@@ -102,7 +102,7 @@ public class WebSocketServlet {
         map.put("emit","chatMessage");
         map.put("data",message);
         JSONObject json = new JSONObject(map);
-        System.out.println(json.toString());
+        log.info(json.toString());
         this.session.getBasicRemote().sendText(json.toString());
 
     }

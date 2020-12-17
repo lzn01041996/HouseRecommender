@@ -9,6 +9,7 @@ import com.rent.foodie.service.serviceimpl.MongoHouseService;
 import com.rent.foodie.service.serviceimpl.MongoUserService;
 import com.rent.foodie.service.serviceimpl.RecommenderService;
 import com.rent.foodie.service.serviceimpl.UnderSearchService;
+import org.apache.log4j.Logger;
 import org.elasticsearch.common.geo.GeoPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ Happy,happy everyday!
 @RestController
 @RequestMapping("/esmap")
 public class ESMapController {
-
+    public static Logger log = Logger.getLogger(ESMapController.class);
 
     @Autowired
     MongoHouseService houseService;
@@ -42,6 +43,8 @@ public class ESMapController {
     RecommenderService recommenderService;
 
 
+
+
     @RequestMapping("/hello")
     public Object hello(HttpServletRequest request,HttpServletResponse response){
         return "hello psingboot!";
@@ -49,7 +52,7 @@ public class ESMapController {
 
     @RequestMapping("/geoDistance")
     public Object geoDistance(@RequestBody GeoPoint centerPoint,HttpServletRequest request){
-        System.out.println("默认未登录接收到的点坐标："+ centerPoint);
+        log.info("默认未登录接收到的点坐标："+ centerPoint);
         List<House> goodsList = new ArrayList<>();
         Set<Under> unders = new LinkedHashSet<>();
         String user = (String)request.getSession().getAttribute("longinuser");
@@ -66,7 +69,7 @@ public class ESMapController {
                     goodsList.add(getDistance(house,5,centerPoint));
                 }
             }
-            System.out.println("已登录用户的列表推荐:"+Arrays.asList(goodsList));
+            log.info("已登录用户的列表推荐:"+Arrays.asList(goodsList));
             return goodsList;
         }
         //解析聚合结果
@@ -80,13 +83,13 @@ public class ESMapController {
                unders.add(nearest(point));
            }
         }
-        System.out.println("未登录用户的列表推荐:"+Arrays.asList(goodsList));
+        log.info("未登录用户的列表推荐:"+Arrays.asList(goodsList));
         return goodsList;
     }
 
     @RequestMapping("/lgeoDistance")
     public Object lgeoDistance(@RequestBody GeoPoint centerPoint,HttpServletRequest request){
-        System.out.println("离线推荐接收到的点坐标："+ centerPoint);
+        log.info("离线推荐接收到的点坐标："+ centerPoint);
         List<House> goodsList = new ArrayList<>();
         Set<Under> unders = new LinkedHashSet<>();
         String user = (String)request.getSession().getAttribute("loginuser");
@@ -100,12 +103,12 @@ public class ESMapController {
                 goodsList.add(getDistance(house,5,centerPoint));
             }
         }
-        System.out.println("已登录用户的列表推荐："+Arrays.asList(goodsList));
+        log.info("已登录用户的列表推荐："+Arrays.asList(goodsList));
         return goodsList;
     }
     @RequestMapping("/GgeoDistance")
     public Object GgeoDistance(@RequestBody GeoPoint centerPoint,HttpServletRequest request){
-        System.out.println("实时推荐接收到的点坐标："+ centerPoint);
+        log.info("实时推荐接收到的点坐标："+ centerPoint);
         List<House> goodsList = new ArrayList<>();
         Set<Under> unders = new LinkedHashSet<>();
         String user = (String)request.getSession().getAttribute("loginuser");
@@ -119,12 +122,13 @@ public class ESMapController {
                 goodsList.add(getDistance(house,10,centerPoint));
             }
         }
-        System.out.println("已登录用户的实时列表推荐："+Arrays.asList(goodsList));
+        log.info("已登录用户的实时列表推荐长度："+goodsList.size());
+        System.out.println();
         return goodsList;
     }
     @RequestMapping("/ngeoDistance")
     public Object ngeoDistance(@RequestBody GeoPoint centerPoint,HttpServletRequest request){
-        System.out.println("基于内容接收到的点坐标："+ centerPoint);
+        log.info("基于内容接收到的点坐标："+ centerPoint);
         List<House> goodsList = new ArrayList<>();
         String user = (String)request.getSession().getAttribute("loginuser");
         List<House> tmp = new ArrayList<>();
@@ -137,7 +141,7 @@ public class ESMapController {
                 goodsList.add(getDistance(house,5,centerPoint));
             }
         }
-        System.out.println("新登录用户的列表推荐："+Arrays.asList(goodsList));
+        log.info("新登录用户的列表推荐："+Arrays.asList(goodsList));
         return goodsList;
     }
 
@@ -154,7 +158,7 @@ public class ESMapController {
                 goodsList.add(getDistance(house,5,centerPoint));
             }
         }
-        System.out.println("浏览数量较多的列表："+Arrays.asList(goodsList));
+        log.info("浏览数量较多的列表长度："+goodsList.size());
         return goodsList;
     }
 

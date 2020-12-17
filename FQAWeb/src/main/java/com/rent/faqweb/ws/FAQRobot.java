@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /*
 @李子宁
@@ -91,7 +92,7 @@ public class FAQRobot {
     int lastTxtLen;
     boolean usedVec;
     ArrayList<zhishiku> zhs = new ArrayList<>();
-    //public static Logger log = Logger.getLogger(FAQRobot.class);
+    public static Logger log = Logger.getLogger("logging");
 
     FAQRobot() throws Exception {
         this.zhishitxt = "FAQ_减肥.txt";
@@ -109,12 +110,12 @@ public class FAQRobot {
         load_qa();
         load_embedding();
 
-        System.out.println("问答知识库载入完成....");
+        log.info("问答知识库载入完成....");
     }
 
     public void load_qa() throws Exception {
         JiebaSegmenter segmenter = new JiebaSegmenter();
-        System.out.println("问答知识库开始载入");
+        log.info("问答知识库开始载入");
         File infile = new File("D:\\IntelliJ IDEA-workspace\\HouseRent\\HouseRecommend\\FAQTest\\src\\main\\resources\\FAQ_减肥.txt");
         BufferedReader reader = new BufferedReader(new FileReader(infile));
         String inString = "";

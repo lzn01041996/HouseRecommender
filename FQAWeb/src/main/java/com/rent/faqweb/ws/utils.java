@@ -2,10 +2,11 @@ package com.rent.faqweb.ws;
 
 import org.ansj.domain.Result;
 import org.ansj.domain.Term;
-import org.apache.logging.log4j.Logger;
 import sun.rmi.log.ReliableLog;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
 @李子宁
@@ -16,7 +17,7 @@ Happy,happy everyday!
 */
 public class utils {
     Map<String, Double> POS_WEIGHT = new HashMap<>();
-    //private static Logger logger = Logger.getLogger(utils.class);
+    public static Logger logger = Logger.getLogger("logging");
 
     utils() {
         POS_WEIGHT.put("Ag", 1.0);//形语素
@@ -65,10 +66,10 @@ public class utils {
 
     }
 
-  /*  public Logger getlogger(String name, ReliableLog.LogFile logFile) {
-        logger.setLevel(Level.DEBUG);
+    public Logger getlogger(String name, ReliableLog.LogFile logFile) {
+        logger.setLevel(Level.INFO);
         return logger;
-    }*/
+    }
 
     public double similarity(Result a, String[] b, String method) {
         List<String> list = Arrays.asList(b);

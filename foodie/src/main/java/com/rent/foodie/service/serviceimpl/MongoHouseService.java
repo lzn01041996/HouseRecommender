@@ -80,7 +80,6 @@ public class MongoHouseService {
         }
         String path = "D:\\house.csv";
         StringBuffer buffer = new StringBuffer();
-        System.out.println(rs.size());
         for (House r : rs) {
             String s = r.getHid() + ","+r.getTitle().replace(","," ")+","+r.getSingleType().replace(","," ")+","+r.getSize().replace(","," ")+","+r.getDirectType().replace(","," ")+","+r.getSingleLayer().replace(","," ")
                     +","+r.getRentType().replace(","," ")+","+r.getPlace().replace(","," ")+","+r.getUnderPlace().replace(","," ")+","+r.getSchoolPlace().replace(","," ")+","+r.getPrice()+"\n";

@@ -3,6 +3,7 @@ package com.rent.kafkastream;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.processor.TopologyBuilder;
+import org.apache.log4j.Logger;
 
 import java.util.Properties;
 
@@ -15,6 +16,7 @@ Happy,happy everyday!
 */
 public class Application {
     public static void main(String[] args) {
+        Logger log = Logger.getLogger(Application.class);
         String brokers = "localhost:9092";
         String zookeepers = "localhost:2181";
 
@@ -42,6 +44,6 @@ public class Application {
 
         streams.start();
 
-        System.out.println("Kafka stream started!>>>>>>>>>>>>>>>>>>>");
+        log.info("Kafka stream started!>>>>>>>>>>>>>>>>>>>");
     }
 }

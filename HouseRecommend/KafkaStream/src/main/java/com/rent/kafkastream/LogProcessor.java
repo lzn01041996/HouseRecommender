@@ -3,6 +3,7 @@ package com.rent.kafkastream;
 
 import org.apache.kafka.streams.processor.Processor;
 import org.apache.kafka.streams.processor.ProcessorContext;
+import org.apache.log4j.Logger;
 
 /*
 @李子宁
@@ -12,7 +13,7 @@ Happy,happy everyday!
 
 */
 public class LogProcessor implements Processor<byte[],byte[]> {
-
+    public static Logger log = Logger.getLogger(LogProcessor.class);
     private ProcessorContext context;
     @Override
     public void init(ProcessorContext processorContext) {
@@ -25,7 +26,7 @@ public class LogProcessor implements Processor<byte[],byte[]> {
         String input = new String(line);
         //根据前缀HOUSE_BROWSE_PREFIX:从日志信息中提取浏览数据
         if (input.contains("HOUSE_BROWSE_PREFIX:")){
-            System.out.println("house rating data coming!>>>>>>>>>>>>>>>>>>>>>" + input);
+            log.info("house rating data coming!>>>>>>>>>>>>>>>>>>>>>" + input);
             input = input.split("HOUSE_BROWSE_PREFIX:")[1].trim();
             context.forward( "logProcessor".getBytes(), input.getBytes());
         }

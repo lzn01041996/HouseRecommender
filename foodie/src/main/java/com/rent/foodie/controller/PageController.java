@@ -66,14 +66,17 @@ public class PageController {
     public String login(){
         return "login";
     }
+
     @RequestMapping("/user_register")
     public String register(){
         return "register";
     }
+
     @RequestMapping("/logedIndex")
     public String loged(){
         return "logedIndex";
     }
+
     @RequestMapping("/logedIndexs")
     public String logeds(HttpServletRequest request){
         String loginuser =(String) request.getSession().getAttribute("loginuser");
@@ -98,8 +101,10 @@ public class PageController {
 
         return "logedIndex";
     }
+
     @RequestMapping("/FirstLindex")
     public String firstLog(){return "FirstLindex";}
+
     @RequestMapping("/house_detail")
     public String returnDetail(@RequestParam("pid") int pid,Model model,HttpServletRequest request){
         String loginuser =(String) request.getSession().getAttribute("loginuser");
@@ -126,6 +131,7 @@ public class PageController {
         return "index";
     }
 
+    //计算的是浏览一个具体的房屋信息所花费的时间
     public static String getDistanceTime(long time1, long time2) {
         long day = 0;
         long hour = 0;

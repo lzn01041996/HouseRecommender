@@ -18,6 +18,7 @@ Happy,happy everyday!
 2020/9/2
 
 */
+//配置类设置连接redis、mongoDB、elasticSearch。
 @Configuration
 public class Config {
     private String mongoHost;

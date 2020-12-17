@@ -14,7 +14,7 @@ Happy,happy everyday!
 */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-
+    //视图设置，无路径的请求默认跳转到index界面。
     public void addViewControllers(ViewControllerRegistry registry){
         registry.addViewController("/").setViewName("forward:/index.html");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
