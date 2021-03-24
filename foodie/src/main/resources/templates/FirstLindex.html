@@ -4,9 +4,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
-
+	<link rel="stylesheet" href="layim/dist/css/layui.css">
 	<style type="text/css">
-		body {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";} 
+		body {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
 		/* html, #esmap, #allmap {width: 100%;height: 85%;overflow: hidden;margin:0;font-family:"微软雅黑";} */
 		#allmap {width: 100%;height: 700px;overflow: hidden;margin:0;font-family:"微软雅黑";}
 		.zhezhao{
@@ -102,7 +102,7 @@
 	</div>
 
 </body>
-
+<script src="layim/dist/layui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.9/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -135,7 +135,7 @@
 			//this.initMap();
 		},
 		created() {
-			
+
 		},
 		methods: {
 			alertWindows(){
@@ -489,6 +489,86 @@
 				});
 			},
 		}
+	});
+</script>
+<script >
+	//客服模式
+	layui.use('layim', function(layim){
+		var socket = null;
+		if('WebSocket' in window){
+			socket = new WebSocket('ws://localhost:8033/wsocket');
+		}else{
+			alert("not support websocket")
+		}
+		layim.config({
+			init: {
+				/*
+                url: ''   //接口地址（返回的数据格式见下文）
+                ,type: 'get'
+                ,data: {}  //额外参数
+                 */
+				mine: {
+					name: "纸飞机"
+					,id: 1
+					,status: "online"
+					,sign: "在深邃的编码世界，做一个轻盈的纸飞机" // 我的飞机
+					,avatar: '/images/5.jpg'
+				}
+			}
+			,brief: true //是否简约模式（如果是true则不显示主面板）
+			//以下为我们内置的模版，也可以换成你的任意页面。若不开启，剔除该项即可
+			,chatLog: layui.cache.dir + 'css/modules/layim/html/chatlog.html'
+		}).chat({
+			name: '客服姐姐'
+			,type: 'friend'
+			,avatar:  '/images/4.jpg'
+			,id: -2
+		});
+
+		layim.setChatMin();
+		//建立websocket通讯
+		//如果兼容ie8+，建议采用socket.io的版本
+		//  var socket = new WebSocket("ws://localhost:7777/wsocket");
+		//发送一个消息
+		//连接发生错误的回调方法
+		socket.onerror = function(){
+			console.log("websocket连接发生错误。")
+		};
+
+		//连接成功时触发
+		socket.onopen = function () {
+			console.log('socket连接成功');
+			//socket.send('Hi Server,I am LayIM');
+		};
+		socket.onclose = function(){
+			console.log("websocket关闭！")
+		};
+
+		layim.on('sendMessage',function (res) {
+			var To = res.to;
+			socket.send(JSON.stringify({
+				type: 'chatMessage' //随便定义，用于在服务端区分消息类型
+				,data: res
+			}));
+
+			//监听收到的消息
+			socket.onmessage = function (res) {
+				//res为接收到的值，如{“emit": "messageName","data":{}}var obj={};
+				var datas = res.data;
+				datas = JSON.parse(datas);
+				obj = {
+					username: To.name
+					,avatar: To.avatar
+					,id: To.id
+					,type: To.type
+					,content: datas.data
+				}
+				if (datas.emit == "chatMessage"){
+					layim.getMessage(obj)//res.data即你发送消息传递的数据
+				}
+				//emit即为发出的事件名，用于区分不同的消息
+			};
+		});
 	});
 </script>
 </html>

@@ -69,7 +69,7 @@ public class ESMapController {
                     goodsList.add(getDistance(house,5,centerPoint));
                 }
             }
-            log.info("已登录用户的列表推荐:"+Arrays.asList(goodsList));
+            log.info("已登录用户的列表推荐长度:"+goodsList.size());
             return goodsList;
         }
         //解析聚合结果
@@ -83,7 +83,7 @@ public class ESMapController {
                unders.add(nearest(point));
            }
         }
-        log.info("未登录用户的列表推荐:"+Arrays.asList(goodsList));
+        log.info("未登录用户的列表推荐长度:"+goodsList.size());
         return goodsList;
     }
 
@@ -103,7 +103,7 @@ public class ESMapController {
                 goodsList.add(getDistance(house,5,centerPoint));
             }
         }
-        log.info("已登录用户的列表推荐："+Arrays.asList(goodsList));
+        log.info("已登录用户的列表推荐长度："+goodsList.size());
         return goodsList;
     }
     @RequestMapping("/GgeoDistance")
@@ -141,7 +141,7 @@ public class ESMapController {
                 goodsList.add(getDistance(house,5,centerPoint));
             }
         }
-        log.info("新登录用户的列表推荐："+Arrays.asList(goodsList));
+        log.info("新登录用户的列表推荐长度："+goodsList.size());
         return goodsList;
     }
 

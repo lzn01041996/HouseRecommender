@@ -433,7 +433,7 @@
 					,id: 1
 					,status: "online"
 					,sign: "在深邃的编码世界，做一个轻盈的纸飞机" // 我的飞机
-					,avatar: '/images/5.pic.jpg'
+					,avatar: '/images/5.jpg'
 				}
 			}
 			,brief: true //是否简约模式（如果是true则不显示主面板）
@@ -442,11 +442,11 @@
 		}).chat({
 			name: '客服姐姐'
 			,type: 'friend'
-			,avatar:  '/images/4.pic.jpg'
+			,avatar:  '/images/4.jpg'
 			,id: -2
 		});
 
-
+		layim.setChatMin();
 		//建立websocket通讯
 		//如果兼容ie8+，建议采用socket.io的版本
 		//  var socket = new WebSocket("ws://localhost:7777/wsocket");

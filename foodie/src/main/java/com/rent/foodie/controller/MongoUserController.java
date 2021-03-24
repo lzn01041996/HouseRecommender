@@ -3,6 +3,7 @@ package com.rent.foodie.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.rent.foodie.mongo.pojo.User;
 import com.rent.foodie.service.serviceimpl.MongoUserService;
+import org.apache.log4j.Logger;
 import org.elasticsearch.common.geo.GeoPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ Happy,happy everyday!
 public class MongoUserController {
     @Autowired
     MongoUserService userService;
+    public static Logger log = Logger.getLogger(MongoUserController.class);
 
     @RequestMapping("/login")
     public String longin(HttpServletRequest request, @RequestParam("username") String username,
@@ -35,7 +37,7 @@ public class MongoUserController {
             return "fail";
         }
         request.getSession().setAttribute("loginuser",user.getName());
-        System.out.println("登录进来的用户名："+username);
+        log.info("登录进来的用户名："+username);
         if (user.getFirst() == null){
             user.setFirst("false");
             userService.updateUser(user);
